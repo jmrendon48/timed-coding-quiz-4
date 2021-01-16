@@ -1,5 +1,5 @@
 var mainContainer = document.querySelector("#main-content");
-var time = 50;
+var time = 75;
 var i = 0;
 
 var questions = [
@@ -33,6 +33,26 @@ var questions = [
             "4. /"
         ],
         a: "2. &&"
+    },
+    {
+        q: "What is the correct Javascript syntax to write 'Hello World'?",
+        options: [
+            "1. response.write('Hello World')",
+            "2. Hello World",
+            "3. document.write('Hello World')",
+            "4. ('Hello World)"
+        ],
+        a: "3. document.write('Hello World')",
+    },
+    {
+        q: "Inside which Html element do we put the Javascript?",
+        options: [
+            "1. <javascript>",
+            "2. <js>",
+            "3. <script>",
+            "4. <scripting>"
+        ],
+        a: "3. <script>"
     },
     {
         q: "When you want to use Javascript to manipulate the browser window, the browser window's Javascript object name is:",
@@ -73,67 +93,6 @@ var questions = [
             "4. ="
         ],
         a: "2. ||"
-    },
-    {
-        q: "A named element in a Javascript program that is used to store and retrieve data is a ___.",
-        options: [
-            "1. Method",
-            "2. string",
-            "3. Variable",
-            "4. for loop"
-        ],
-        a: "3. Variable"
-    },
-    {
-        q: "How do you write 'Hello World' in an alert box?",
-        options: [
-            "1. alert('Hello World')",
-            "2. msgBox('Hello World')",
-            "3. alertBox='Hello World'",
-            "4. alertBox('Hello World')"
-        ],
-        a: "1. alert('Hello World')"
-    },
-    {
-        q: "What is the correct syntax for reffering to an external script called 'xxx.js'?",
-        options: [
-            "1. <script src='xxx.js'>",
-            "2. <script name='xxx.js'>",
-            "3. <script href='xxx.js'>",
-            "4. <script value='xxx.js'>"
-        ],
-        a: "1. <script src='xxx.js'>"
-    },
-    {
-        q: "Where is the correct place to insert Javascript?",
-        options: [
-            "1. The <footer> section",
-            "2. The <head> section",
-            "3. The <body> section",
-            "4. Both the <head> and <body> section"
-        ],
-        a: "4. Both the <head> and <body> section"
-
-    },
-    {
-        q: "What is the correct Javascript syntax to write 'Hello World'?",
-        options: [
-            "1. response.write('Hello World')",
-            "2. Hello World",
-            "3. document.write('Hello World')",
-            "4. ('Hello World)"
-        ],
-        a: "3. document.write('Hello World')",
-    },
-    {
-        q: "Inside which Html element do we put the Javascript?",
-        options: [
-            "1. <javascript>",
-            "2. <js>",
-            "3. <script>",
-            "4. <scripting>"
-        ],
-        a: "3. <script>"
     }
 ];
 
@@ -202,23 +161,25 @@ var createQuestion = function() {
     if (i === 0) {
         var landingPageContainer = document.querySelector(".landing-page");
         mainContainer.replaceChild(questionPageContainer, landingPageContainer);
-        document.querySelector(".answer-option").addEventListener("click", function(){
-            i++
-            if (event.target === false) {
+        document.querySelectorAll(".answer-option").forEach(link => link.addEventListener("click", () => {
+            if (event.target.textContent != questions[i].a) {
                 time = time - 15;
-            } 
-
+            }
+            i++;
             questionPageContainer.remove(questionEl, option1, option2, option3, option4);
-            console.log(questionPageContainer);
             createQuestion();
-        });
+        }));
+        
     } else if (i < questions.length && i > 0) {
-        document.querySelector(".answer-option").addEventListener("click", function(){
+        document.querySelectorAll(".answer-option").forEach(link => link.addEventListener("click", () => {
+            if (event.target.textContent != questions[i].a) {
+                time = time - 15;
+            }
             i++;
             questionPageContainer.remove(questionEl, option1, option2, option3, option4);
             console.log(questionPageContainer);
             createQuestion();
-        });
+        }));
     }
 };
 
