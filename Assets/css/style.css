@@ -21,7 +21,7 @@ header h1, header a {
 }
 
 .title {
-    font-size: 40px;
+    font-size: 35px;
 }
 
 .instructions {
@@ -38,7 +38,21 @@ header h1, header a {
     border-radius: 10px;
 }
 
-.answer-option {
-    
+.question {
+    font-size: 35px;
+    margin: 0 200px 0 300px;
+    text-align: left;
+    padding: 5px;
 }
 
+.answer-option {
+    display: block;
+    background-color: blueviolet;
+    border-radius: 5px;
+    color: white;
+    padding: 5px 15px;
+    width: 275px;
+    text-align: left;
+    font-size: 20px;
+    margin: 5px 0 5px 300px;
+}
