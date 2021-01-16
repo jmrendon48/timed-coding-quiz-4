@@ -118,7 +118,7 @@ var createLandingPage = function () {
 
 };
 
-var startQuiz = function() {
+var quizRunThrough = function() {
     var targetEl = event.target;
 
     if (targetEl.matches(".start-btn")) {
@@ -138,8 +138,18 @@ var startQuiz = function() {
     }
 };
 
+var timedOut = function () {
+    var timedOutContainer = document.createElement("div");
+    timedOutContainer.className = ".timed-out";
+
+    var questionPageContainer = document.querySelector(".question-page");
+    
+};
+
+
 var createQuestion = function() {
     var questionPageContainer = document.createElement("div");
+    questionPageContainer.className = "question-page";
     var questionEl = document.createElement("h3");
     questionEl.className = "question";
     questionEl.textContent = questions[i].q;
@@ -177,17 +187,13 @@ var createQuestion = function() {
             }
             i++;
             questionPageContainer.remove(questionEl, option1, option2, option3, option4);
-            console.log(questionPageContainer);
             createQuestion();
         }));
     }
 };
 
-var quizRunThrough = function () {
-    createLandingPage();
-    mainContainer.addEventListener("click", startQuiz);
-    
-    
-};
 
-quizRunThrough();
+createLandingPage();
+
+mainContainer.addEventListener("click", quizRunThrough);
+
