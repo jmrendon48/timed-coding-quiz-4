@@ -56,3 +56,21 @@ header h1, header a {
     font-size: 20px;
     margin: 5px 0 5px 300px;
 }
+
+.timed-out-title {
+    font-size: 35px;
+    padding: 5px;
+}
+
+.timed-out-goodbye {
+    font-size: 25px;
+    padding: 5px;
+}
+
+.timed-out-button-reset {
+    background-color: blueviolet;
+    border-radius: 5px;
+    color: white;
+    padding: 5px 10px;
+    margin: 10px;
+}

@@ -1,5 +1,5 @@
 var mainContainer = document.querySelector("#main-content");
-var time = 75;
+var time = 10;
 var i = 0;
 
 var questions = [
@@ -118,11 +118,11 @@ var createLandingPage = function () {
 
 };
 
-var quizRunThrough = function() {
+var startQuiz = function() {
     var targetEl = event.target;
 
     if (targetEl.matches(".start-btn")) {
-          
+        time = 10;
         let myTimer = setInterval(function() {
             var timeEl = document.querySelector("#time");
             if (time > 0) {
@@ -139,11 +139,27 @@ var quizRunThrough = function() {
 };
 
 var timedOut = function () {
+    i = 0;
     var timedOutContainer = document.createElement("div");
-    timedOutContainer.className = ".timed-out";
+    timedOutContainer.className = "timed-out";
+    var timedOutTitle = document.createElement("h3");
+    timedOutTitle.className = "timed-out-title";
+    timedOutTitle.textContent = "Time has run out! Game over.";
+    var timedOutGoodbye = document.createElement("p");
+    timedOutGoodbye.className = "timed-out-goodbye";
+    timedOutGoodbye.textContent = "Try again next time."
+    var timedOutButtonReset = document.createElement("button");
+    timedOutButtonReset.className = "timed-out-button-reset";
+    timedOutButtonReset.textContent = "Go Back";
+    timedOutContainer.append(timedOutTitle, timedOutGoodbye, timedOutButtonReset);
 
     var questionPageContainer = document.querySelector(".question-page");
-    
+    mainContainer.replaceChild(timedOutContainer, questionPageContainer);
+
+    timedOutButtonReset.addEventListener("click", function () {
+        timedOutContainer.remove();
+        createLandingPage();
+    });
 };
 
 
@@ -180,7 +196,7 @@ var createQuestion = function() {
             createQuestion();
         }));
         
-    } else if (i < questions.length && i > 0) {
+    } else if (i < questions.length && i > 0 && time > 0) {
         document.querySelectorAll(".answer-option").forEach(link => link.addEventListener("click", () => {
             if (event.target.textContent != questions[i].a) {
                 time = time - 15;
@@ -189,11 +205,13 @@ var createQuestion = function() {
             questionPageContainer.remove(questionEl, option1, option2, option3, option4);
             createQuestion();
         }));
+    } else if (time < 0) {
+        timedOut();
     }
 };
 
 
 createLandingPage();
 
-mainContainer.addEventListener("click", quizRunThrough);
+mainContainer.addEventListener("click", startQuiz);
 
