@@ -21,7 +21,7 @@ header h1, header a {
 }
 
 .title {
-    font-size: 35px;
+    font-size: 40px;
 }
 
 .instructions {
@@ -72,5 +72,71 @@ header h1, header a {
     border-radius: 5px;
     color: white;
     padding: 5px 10px;
+    margin: 10px;
+}
+
+.save-score-container {
+    width: 600px;
+    margin: auto;
+}
+
+.save-score-title {
+    text-align: left;
+    font-size: 35px;
+    padding: 5px;
+}
+
+.save-score-description, .save-initials-description {
+    text-align: left;
+    font-size: 20px;
+    padding: 5px;
+}
+
+.initials-container {
+    display: flex;
+}
+
+.initials-form {
+    padding: 5px 0 0 0;
+}
+
+.initials-input {
+    font-size: 16px;
+    padding: 0 5px;
+    margin: 0 5px;
+}
+
+.initials-button {
+    padding: 3px;
+    color: white;
+    background-color: blueviolet;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+
+.high-scores-container {
+    width: 50%;
+    margin: auto;
+}
+
+.high-scores-title {
+    text-align: left;
+    font-size: 35px;
+    padding: 10px;
+}
+
+.high-scores-entry {
+    text-align: left;
+    font-size: 20px;
+    padding: 10px 15px;
+    background-color: lavender;
+}
+
+.high-scores-reset {
+    float: left;
+    padding: 5px;
+    background-color: blueviolet;
+    border-radius: 5px;
+    color: white;
     margin: 10px;
 }
