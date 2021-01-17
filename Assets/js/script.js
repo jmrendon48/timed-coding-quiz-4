@@ -136,6 +136,7 @@ var countdown = function() {
     } else {
         timeEl.textContent ="Time: 0";
         clearInterval(timer);
+        mainContainer.innerHTML = "";
         timedOut();
     }
 };
@@ -157,8 +158,7 @@ var timedOut = function () {
     timedOutButtonReset.textContent = "Go Back";
     timedOutContainer.append(timedOutTitle, timedOutGoodbye, timedOutButtonReset);
 
-    var questionPageContainer = document.querySelector(".question-page");
-    mainContainer.replaceChild(timedOutContainer, questionPageContainer);
+    mainContainer.appendChild(timedOutContainer);
 
     document.querySelector(".timed-out-button-reset").addEventListener("click", function () {
         timedOutContainer.remove();
@@ -180,7 +180,6 @@ var quizRunThrough = function() {
         questionPageContainer.className = "question-page";
         var questionEl = document.createElement("h3");
         questionEl.className = "question";
-        console.log(i);
         questionEl.textContent = questions[i].q;
         var option1 = document.createElement("button");
         option1.className = "answer-option";
@@ -219,19 +218,21 @@ var quizRunThrough = function() {
                 }
 
                 i++;
-
-                questionPageContainer.remove(questionEl, option1, option2, option3, option4);
-                if (i = questions.length - 1) {
+ 
+                if (i = questions.length - 1 && time > 0) {
                     i++;
-                    saveScore();
+                    questionPageContainer.remove(questionEl, option1, option2, option3, option4);
+                    saveScorePage();
                     clearInterval(timer);
+                } else if (i = questions.length - 1 && time === 0) {
+                    i++;
                 }
             }));
         } 
     } 
 };
 
-var saveScore = function() {
+var saveScorePage = function() {
     var timeEl = document.querySelector("#time");
     timeEl.textContent = "Time: " + time;
 
@@ -294,6 +295,10 @@ var saveScore = function() {
     
 };
 
+var saveHighScore = function () {
+    localStorage.setItem("high-scores", JSON.stringify(highScores));
+}
+
 var highScoresPage = function () {
     var highScoresContainer = document.createElement("div");
     highScoresContainer.className = "high-scores-container";
@@ -313,7 +318,6 @@ var highScoresPage = function () {
 
     highScoresContainer.append(highScoresTitle, highScoresEntry, highScoresReset);
     
-    // var saveScoreContainer = document.querySelector(".save-score-container");
     mainContainer.appendChild(highScoresContainer);
 
     document.querySelector(".high-scores-reset").addEventListener("click", function () {
@@ -333,8 +337,8 @@ createLandingPage();
 mainContainer.addEventListener("click", quizRunThrough);
 
 document.getElementById("high-scores").addEventListener("click", function() {
-    var landingPage = document.querySelector(".landing-page");
-    landingPage.remove();
+    mainContainer.innerHTML = "";
+    clearInterval(timer);
     highScoresPage();
 });
 
