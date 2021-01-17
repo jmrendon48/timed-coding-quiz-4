@@ -6,6 +6,7 @@ var highScoreIdCounter = 0;
 var highScores = [];
 var timer = setInterval(countdown, 1000);
 
+
 var questions = [
     {
         q: "In Javascript, the symbols +-* and / are:",
@@ -101,6 +102,11 @@ var questions = [
 ];
 
 var createLandingPage = function () {
+    time = 10;
+    i = 0;
+
+    var timeEl = document.querySelector("#time");
+    timeEl.textContent = "Time: 0";
 
     var landingPageContainer = document.createElement("div");
     landingPageContainer.className = "landing-page";
@@ -135,7 +141,6 @@ var countdown = function() {
 };
 
 var timedOut = function () {
-    i = 0;
     var timedOutContainer = document.createElement("div");
     timedOutContainer.className = "timed-out";
 
@@ -155,7 +160,7 @@ var timedOut = function () {
     var questionPageContainer = document.querySelector(".question-page");
     mainContainer.replaceChild(timedOutContainer, questionPageContainer);
 
-    document.querySelector("timed-out-button-reset").addEventListener("click", function () {
+    document.querySelector(".timed-out-button-reset").addEventListener("click", function () {
         timedOutContainer.remove();
         createLandingPage();
     });
@@ -167,55 +172,62 @@ var quizRunThrough = function() {
 
     if (targetEl.matches(".start-btn")) {
         timer = setInterval(countdown, 1000);
+        i = 0;
     }
 
-    var questionPageContainer = document.createElement("div");
-    questionPageContainer.className = "question-page";
-    var questionEl = document.createElement("h3");
-    questionEl.className = "question";
-    questionEl.textContent = questions[i].q;
-    var option1 = document.createElement("button");
-    option1.className = "answer-option";
-    var option2 = document.createElement("button");
-    option2.className = "answer-option";
-    var option3 = document.createElement("button");
-    option3.className = "answer-option";
-    var option4 = document.createElement("button");
-    option4.className = "answer-option";
-    option1.textContent = questions[i].options[0];
-    option2.textContent = questions[i].options[1];
-    option3.textContent = questions[i].options[2];
-    option4.textContent = questions[i].options[3];
-    questionPageContainer.append(questionEl, option1, option2, option3, option4);
-    mainContainer.appendChild(questionPageContainer);
+    if (i < questions.length && targetEl.matches(".answer-option") || targetEl.matches(".start-btn")) {
+        var questionPageContainer = document.createElement("div");
+        questionPageContainer.className = "question-page";
+        var questionEl = document.createElement("h3");
+        questionEl.className = "question";
+        console.log(i);
+        questionEl.textContent = questions[i].q;
+        var option1 = document.createElement("button");
+        option1.className = "answer-option";
+        var option2 = document.createElement("button");
+        option2.className = "answer-option";
+        var option3 = document.createElement("button");
+        option3.className = "answer-option";
+        var option4 = document.createElement("button");
+        option4.className = "answer-option";
+        option1.textContent = questions[i].options[0];
+        option2.textContent = questions[i].options[1];
+        option3.textContent = questions[i].options[2];
+        option4.textContent = questions[i].options[3];
+        questionPageContainer.append(questionEl, option1, option2, option3, option4);
+        mainContainer.appendChild(questionPageContainer);
 
-    if (i === 0) {
-        var landingPageContainer = document.querySelector(".landing-page");
-        mainContainer.replaceChild(questionPageContainer, landingPageContainer);
-        document.querySelectorAll(".answer-option").forEach(link => link.addEventListener("click", () => {
-            if (event.target.textContent != questions[i].a) {
-                time = time - 15;
-            }
+        if (i === 0) {
+            var landingPageContainer = document.querySelector(".landing-page");
+            mainContainer.replaceChild(questionPageContainer, landingPageContainer);
+            document.querySelectorAll(".answer-option").forEach(link => link.addEventListener("click", () => {
+                if (event.target.textContent != questions[i].a) {
+                    time = time - 15;
+                }
 
-            i++;
-            questionPageContainer.remove(questionEl, option1, option2, option3, option4);
-        }));
-        
-    } else if (i < questions.length && i > 0 && time > 0) {
-        document.querySelectorAll(".answer-option").forEach(link => link.addEventListener("click", () => {
-            if (event.target.textContent != questions[i].a) {
-                time = time - 15;
-            }
+                i++;
+                questionPageContainer.remove(questionEl, option1, option2, option3, option4);
+            }));
+            
+        } else if (i < questions.length && i > 0 && time > 0) {
+            document.querySelectorAll(".answer-option").forEach(link => link.addEventListener("click", () => {
+                if (event.target.textContent != questions[i].a) {
+                    time = time - 15;
+                    if (time < 0) {
+                        time = 0;
+                    }
+                }
 
-            i++;
+                i++;
 
-            questionPageContainer.remove(questionEl, option1, option2, option3, option4);
-            if (i = questions.length - 1) {
-                i = questions.length - 1;
-                saveScore();
-                clearInterval(timer);
-            }
-        }));
+                questionPageContainer.remove(questionEl, option1, option2, option3, option4);
+                if (i = questions.length - 1) {
+                    i++;
+                    saveScore();
+                    clearInterval(timer);
+                }
+            }));
+        } 
     } 
 };
 
@@ -270,6 +282,7 @@ var saveScore = function() {
     
         if (initialsInput.value === "" || initialsInput.value == null) {
             alert("Please enter initials.");
+            event.preventDefault();
         }
         else {
             localStorage.setItem("initials", initialsText);
