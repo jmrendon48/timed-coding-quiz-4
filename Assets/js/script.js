@@ -4,6 +4,7 @@ var i = 0;
 var score = 0;
 var highScoreIdCounter = 0;
 var highScores = [];
+var timer = setInterval(countdown, 1000);
 
 var questions = [
     {
@@ -121,25 +122,15 @@ var createLandingPage = function () {
 
 };
 
-var startQuiz = function() {
-    var targetEl = event.target;
-
-    if (targetEl.matches(".start-btn")) {
-        time = 10;
-        score = 0;
-        let myTimer = setInterval(function() {
-            var timeEl = document.querySelector("#time");
-            if (time > 0) {
-                timeEl.textContent = "Time: " + time;
-                time--;
-            } else {
-                timeEl.textContent ="Time: 0";
-                clearInterval(myTimer);
-                timedOut();
-            }
-        }, 1000);
-
-        createQuestion();
+var countdown = function() {
+    var timeEl = document.querySelector("#time");
+    if (time > 0) {
+        timeEl.textContent = "Time: " + time;
+        time--;
+    } else {
+        timeEl.textContent ="Time: 0";
+        clearInterval(timer);
+        timedOut();
     }
 };
 
@@ -164,14 +155,20 @@ var timedOut = function () {
     var questionPageContainer = document.querySelector(".question-page");
     mainContainer.replaceChild(timedOutContainer, questionPageContainer);
 
-    timedOutButtonReset.addEventListener("click", function () {
+    document.querySelector("timed-out-button-reset").addEventListener("click", function () {
         timedOutContainer.remove();
         createLandingPage();
     });
 };
 
 
-var createQuestion = function() {
+var quizRunThrough = function() {
+    var targetEl = event.target;
+
+    if (targetEl.matches(".start-btn")) {
+        timer = setInterval(countdown, 1000);
+    }
+
     var questionPageContainer = document.createElement("div");
     questionPageContainer.className = "question-page";
     var questionEl = document.createElement("h3");
@@ -202,7 +199,6 @@ var createQuestion = function() {
 
             i++;
             questionPageContainer.remove(questionEl, option1, option2, option3, option4);
-            createQuestion();
         }));
         
     } else if (i < questions.length && i > 0 && time > 0) {
@@ -217,8 +213,7 @@ var createQuestion = function() {
             if (i = questions.length - 1) {
                 i = questions.length - 1;
                 saveScore();
-            } else {
-                createQuestion();
+                clearInterval(timer);
             }
         }));
     } 
@@ -321,5 +316,5 @@ var loadHighScores = function() {
 
 createLandingPage();
 
-mainContainer.addEventListener("click", startQuiz);
+mainContainer.addEventListener("click", quizRunThrough);
 
