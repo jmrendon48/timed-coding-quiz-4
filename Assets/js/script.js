@@ -287,6 +287,7 @@ var saveScore = function() {
         else {
             localStorage.setItem("initials", initialsText);
             localStorage.setItem("score", score);
+            saveScoreContainer.remove();
             highScoresPage();
         }
     });
@@ -303,8 +304,8 @@ var highScoresPage = function () {
 
     var highScoresEntry = document.createElement("p");
     highScoresEntry.className = "high-scores-entry";
-    var initialsText = document.querySelector(".initials-input").value;
-    highScoresEntry.textContent = initialsText + " - " + score;
+    // var initialsText = document.querySelector(".initials-input").value;
+    // highScoresEntry.textContent = initialsText + " - " + score;
 
     var highScoresReset = document.createElement("button");
     highScoresReset.className = "high-scores-reset";
@@ -312,8 +313,8 @@ var highScoresPage = function () {
 
     highScoresContainer.append(highScoresTitle, highScoresEntry, highScoresReset);
     
-    var saveScoreContainer = document.querySelector(".save-score-container");
-    mainContainer.replaceChild(highScoresContainer, saveScoreContainer);
+    // var saveScoreContainer = document.querySelector(".save-score-container");
+    mainContainer.appendChild(highScoresContainer);
 
     document.querySelector(".high-scores-reset").addEventListener("click", function () {
         highScoresContainer.remove();
@@ -330,4 +331,10 @@ var loadHighScores = function() {
 createLandingPage();
 
 mainContainer.addEventListener("click", quizRunThrough);
+
+document.getElementById("high-scores").addEventListener("click", function() {
+    var landingPage = document.querySelector(".landing-page");
+    landingPage.remove();
+    highScoresPage();
+});
 
