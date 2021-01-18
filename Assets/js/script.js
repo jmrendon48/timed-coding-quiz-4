@@ -286,8 +286,13 @@ var saveScorePage = function() {
             event.preventDefault();
         }
         else {
-            localStorage.setItem("initials", initialsText);
-            localStorage.setItem("score", score);
+            var newHighScoreObj = {
+                initials: initialsText,
+                score: score
+            }
+            highScores.push(newHighScoreObj);
+
+            saveHighScore();
             saveScoreContainer.remove();
             highScoresPage();
         }
@@ -296,7 +301,7 @@ var saveScorePage = function() {
 };
 
 var saveHighScore = function () {
-    localStorage.setItem("high-scores", JSON.stringify(highScores));
+    localStorage.setItem("highScores", JSON.stringify(highScores));
 }
 
 var highScoresPage = function () {
@@ -307,8 +312,9 @@ var highScoresPage = function () {
     highScoresTitle.className = "high-scores-title";
     highScoresTitle.textContent = "High Scores";
 
-    var highScoresEntry = document.createElement("p");
-    highScoresEntry.className = "high-scores-entry";
+    loadHighScores();
+    // var highScoresEntry = document.createElement("p");
+    // highScoresEntry.className = "high-scores-entry";
     // var initialsText = document.querySelector(".initials-input").value;
     // highScoresEntry.textContent = initialsText + " - " + score;
 
@@ -316,7 +322,8 @@ var highScoresPage = function () {
     highScoresReset.className = "high-scores-reset";
     highScoresReset.textContent = "Go Back";
 
-    highScoresContainer.append(highScoresTitle, highScoresEntry, highScoresReset);
+    var highScoresEntries = document.querySelector(".high-scores-container");
+    highScoresContainer.append(highScoresTitle, highScoresReset);
     
     mainContainer.appendChild(highScoresContainer);
 
@@ -327,10 +334,32 @@ var highScoresPage = function () {
 };
 
 var loadHighScores = function() {
-    localStorage.getItem("initials");
-    localStorage.getItem("score");
+    var savedHighScores = localStorage.getItem("highScores");
+    console.log(savedHighScores);
+    if (!savedHighScores) {
+        return false;
+    }
+    savedHighScores = JSON.parse(savedHighScores);
 
+    var highScoresEntriesContainer = document.createElement("div");
+    highScoresEntriesContainer.className = "high-scores-entries-container";
+    
+    for (var i = 0; i < highScores.length; i++) {
+        createEntry(savedHighScores[i]);
+
+    }
 };
+
+var createEntry = function () {
+    var savedHighScores = localStorage.getItem("highScores");
+    savedHighScores = JSON.parse(savedHighScores);
+    var highScoresEntry = document.createElement("p");
+    highScoresEntry.className = "high-scores-entry";
+    highScoresEntry.textContent = savedHighScores[0].initials + " - " + savedHighScores[0].score;
+    var highScoresContainer = document.querySelector(".high-scores-container"); 
+    var highScoresEntriesContainer = document.querySelector(".high-scores-entries-container");
+    mainContainer.append(highScoresEntry);
+}
 
 createLandingPage();
 

@@ -141,3 +141,8 @@ header h1, header a {
     color: white;
     margin: 10px;
 }
+
+.high-scores-entry {
+    width: 50%;
+    margin: auto;
+}
