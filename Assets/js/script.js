@@ -1,5 +1,5 @@
 var mainContainer = document.querySelector("#main-content");
-var time = 10;
+var time = 75;
 var i = 0;
 var score = 0;
 var highScoreIdCounter = 0;
@@ -28,81 +28,80 @@ var questions = [
         ],
         a: "1. the variables are equal."
     },
-
-    // {
-    //     q: "In Javascript, which of the following is a logical operator?",
-    //     options: [
-    //         "1. |",
-    //         "2. &&",
-    //         "3. %",
-    //         "4. /"
-    //     ],
-    //     a: "2. &&"
-    // },
-    // {
-    //     q: "What is the correct Javascript syntax to write 'Hello World'?",
-    //     options: [
-    //         "1. response.write('Hello World')",
-    //         "2. Hello World",
-    //         "3. document.write('Hello World')",
-    //         "4. ('Hello World)"
-    //     ],
-    //     a: "3. document.write('Hello World')",
-    // },
-    // {
-    //     q: "Inside which Html element do we put the Javascript?",
-    //     options: [
-    //         "1. <javascript>",
-    //         "2. <js>",
-    //         "3. <script>",
-    //         "4. <scripting>"
-    //     ],
-    //     a: "3. <script>"
-    // },
-    // {
-    //     q: "When you want to use Javascript to manipulate the browser window, the browser window's Javascript object name is:",
-    //     options: [
-    //         "1. Frame",
-    //         "2. Document",
-    //         "3. Window",
-    //         "4. browser_window"
-    //     ],
-    //     a: "3. Window"
-    // },
-    // {
-    //     q: "Alert(message), close() and reset() are Javascript:",
-    //     options: [
-    //         "1. Objects",
-    //         "2. Methods",
-    //         "3. Properties",
-    //         "4. commands"
-    //     ],
-    //     a: "2. Methods"
-    // },
-    // {
-    //     q: "When you want to use Javascript to manipulate the currently displayed Web page, the Web page's Javascript object name is:",
-    //     options: [
-    //         "1. Frame",
-    //         "2. Document",
-    //         "3. Window",
-    //         "4. browser_window"
-    //     ],
-    //     a: "2. Document"
-    // },
-    // {
-    //     q: "In Javascript, which of the following is NOT an assignment operator?",
-    //     options: [
-    //         "1. +=",
-    //         "2. ||",
-    //         "3. *=",
-    //         "4. ="
-    //     ],
-    //     a: "2. ||"
-    // }
+    {
+        q: "In Javascript, which of the following is a logical operator?",
+        options: [
+            "1. |",
+            "2. &&",
+            "3. %",
+            "4. /"
+        ],
+        a: "2. &&"
+    },
+    {
+        q: "What is the correct Javascript syntax to write 'Hello World'?",
+        options: [
+            "1. response.write('Hello World')",
+            "2. Hello World",
+            "3. document.write('Hello World')",
+            "4. ('Hello World)"
+        ],
+        a: "3. document.write('Hello World')",
+    },
+    {
+        q: "Inside which Html element do we put the Javascript?",
+        options: [
+            "1. <javascript>",
+            "2. <js>",
+            "3. <script>",
+            "4. <scripting>"
+        ],
+        a: "3. <script>"
+    },
+    {
+        q: "When you want to use Javascript to manipulate the browser window, the browser window's Javascript object name is:",
+        options: [
+            "1. Frame",
+            "2. Document",
+            "3. Window",
+            "4. browser_window"
+        ],
+        a: "3. Window"
+    },
+    {
+        q: "Alert(message), close() and reset() are Javascript:",
+        options: [
+            "1. Objects",
+            "2. Methods",
+            "3. Properties",
+            "4. commands"
+        ],
+        a: "2. Methods"
+    },
+    {
+        q: "When you want to use Javascript to manipulate the currently displayed Web page, the Web page's Javascript object name is:",
+        options: [
+            "1. Frame",
+            "2. Document",
+            "3. Window",
+            "4. browser_window"
+        ],
+        a: "2. Document"
+    },
+    {
+        q: "In Javascript, which of the following is NOT an assignment operator?",
+        options: [
+            "1. +=",
+            "2. ||",
+            "3. *=",
+            "4. ="
+        ],
+        a: "2. ||"
+    }
 ];
 
 var createLandingPage = function () {
-    time = 10;
+    time = 75;
     i = 0;
 
     var timeEl = document.querySelector("#time");
@@ -208,27 +207,41 @@ var quizRunThrough = function() {
                 questionPageContainer.remove(questionEl, option1, option2, option3, option4);
             }));
             
-        } else if (i < questions.length && i > 0 && time > 0) {
+        } else if (i < questions.length - 1 && i > 0 && time > 0) {
             document.querySelectorAll(".answer-option").forEach(link => link.addEventListener("click", () => {
                 if (event.target.textContent != questions[i].a) {
                     time = time - 15;
+                    questionPageContainer.remove(questionEl, option1, option2, option3, option4);
                     if (time < 0) {
                         time = 0;
                     }
+                    
                 }
-
                 i++;
- 
-                if (i = questions.length - 1 && time > 0) {
+                console.log(i);
+                questionPageContainer.remove(questionEl, option1, option2, option3, option4);                
+            }));
+        }
+        else  {
+            document.querySelectorAll(".answer-option").forEach(link => link.addEventListener("click", () => {
+                if (event.target.textContent != questions[i].a) {
+                    time = time - 15;
                     i++;
                     questionPageContainer.remove(questionEl, option1, option2, option3, option4);
-                    saveScorePage();
-                    clearInterval(timer);
-                } else if (i = questions.length - 1 && time === 0) {
-                    i++;
+                    if (time < 0) {
+                        time = 0;
+                    }
+                    
                 }
+                console.log(questions.length);
+                console.log(i);
+                i++;
+                questionPageContainer.remove(questionEl, option1, option2, option3, option4);
+                saveScorePage();
+                clearInterval(timer);
             }));
-        } 
+        }
+        
     } 
 };
 
@@ -335,7 +348,6 @@ var highScoresPage = function () {
 
 var loadHighScores = function() {
     var savedHighScores = localStorage.getItem("highScores");
-    console.log(savedHighScores);
     if (!savedHighScores) {
         return false;
     }
