@@ -1,3 +1,4 @@
+// glocal variables
 var mainContainer = document.querySelector("#main-content");
 var time = 75;
 var i = 0;
@@ -6,7 +7,7 @@ var highScoreIdCounter = 0;
 var highScores = [];
 var timer = setInterval(countdown, 1000);
 
-
+// questions array
 var questions = [
     {
         q: "In Javascript, the symbols +-* and / are:",
@@ -100,6 +101,7 @@ var questions = [
     }
 ];
 
+// create landing page (start page)
 var createLandingPage = function () {
     time = 75;
     i = 0;
@@ -127,6 +129,7 @@ var createLandingPage = function () {
 
 };
 
+// function that happens each second the timer goes down
 var countdown = function() {
     var timeEl = document.querySelector("#time");
     if (time > 0) {
@@ -140,6 +143,7 @@ var countdown = function() {
     }
 };
 
+// page gets uploaded when time reaches zero
 var timedOut = function () {
     var timedOutContainer = document.createElement("div");
     timedOutContainer.className = "timed-out";
@@ -165,7 +169,7 @@ var timedOut = function () {
     });
 };
 
-
+// uploading of each question page
 var quizRunThrough = function() {
     var targetEl = event.target;
 
@@ -245,6 +249,7 @@ var quizRunThrough = function() {
     } 
 };
 
+// page to input initials to save high score
 var saveScorePage = function() {
     var timeEl = document.querySelector("#time");
     timeEl.textContent = "Time: " + time;
@@ -313,10 +318,12 @@ var saveScorePage = function() {
     
 };
 
+// set highScores array into local storage
 var saveHighScore = function () {
     localStorage.setItem("highScores", JSON.stringify(highScores));
 }
 
+// page that uploads to show the high scores
 var highScoresPage = function () {
     var highScoresContainer = document.createElement("div");
     highScoresContainer.className = "high-scores-container";
@@ -342,6 +349,7 @@ var highScoresPage = function () {
     });
 };
 
+// function to upload saved high scores
 var loadHighScores = function() {
     var savedHighScores = localStorage.getItem("highScores");
     if (!savedHighScores) {
@@ -355,6 +363,7 @@ var loadHighScores = function() {
     }
 };
 
+// creates each entry for high score
 var createEntry = function () {
     var savedHighScores = localStorage.getItem("highScores");
     savedHighScores = JSON.parse(savedHighScores);
