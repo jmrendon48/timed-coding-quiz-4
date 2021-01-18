@@ -30,13 +30,6 @@ The following animation demonstrates the application functionality:
 
 ![code quiz](./Assets/images/04-web-apis-homework-demo.gif)
 
-### Review
+### Link to deployed application
 
-You are required to submit the following for review:
-
-* The URL of the functional, deployed application.
-
-* The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
-
-- - -
-© 2021 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.
+https://jmrendon48.github.io/timed-coding-quiz-4/
