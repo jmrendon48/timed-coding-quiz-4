@@ -326,22 +326,18 @@ var highScoresPage = function () {
     highScoresTitle.textContent = "High Scores";
 
     loadHighScores();
-    // var highScoresEntry = document.createElement("p");
-    // highScoresEntry.className = "high-scores-entry";
-    // var initialsText = document.querySelector(".initials-input").value;
-    // highScoresEntry.textContent = initialsText + " - " + score;
 
     var highScoresReset = document.createElement("button");
     highScoresReset.className = "high-scores-reset";
     highScoresReset.textContent = "Go Back";
 
-    var highScoresEntries = document.querySelector(".high-scores-container");
     highScoresContainer.append(highScoresTitle, highScoresReset);
     
     mainContainer.appendChild(highScoresContainer);
 
     document.querySelector(".high-scores-reset").addEventListener("click", function () {
         highScoresContainer.remove();
+        mainContainer.innerHTML = "";
         createLandingPage();
     });
 };
@@ -353,11 +349,8 @@ var loadHighScores = function() {
     }
     savedHighScores = JSON.parse(savedHighScores);
 
-    var highScoresEntriesContainer = document.createElement("div");
-    highScoresEntriesContainer.className = "high-scores-entries-container";
-    
-    for (var i = 0; i < highScores.length; i++) {
-        createEntry(savedHighScores[i]);
+    for (j = 0; j < savedHighScores.length; j++) {
+        createEntry(savedHighScores[j]);
 
     }
 };
@@ -367,9 +360,7 @@ var createEntry = function () {
     savedHighScores = JSON.parse(savedHighScores);
     var highScoresEntry = document.createElement("p");
     highScoresEntry.className = "high-scores-entry";
-    highScoresEntry.textContent = savedHighScores[0].initials + " - " + savedHighScores[0].score;
-    var highScoresContainer = document.querySelector(".high-scores-container"); 
-    var highScoresEntriesContainer = document.querySelector(".high-scores-entries-container");
+    highScoresEntry.textContent = savedHighScores[j].initials + " - " + savedHighScores[j].score;
     mainContainer.append(highScoresEntry);
 }
 
