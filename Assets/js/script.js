@@ -308,6 +308,8 @@ var saveScorePage = function() {
                 initials: initialsText,
                 score: score
             }
+            var previousHighScores = localStorage.getItem("highScores");
+            highScores = JSON.parse(previousHighScores);
             highScores.push(newHighScoreObj);
 
             saveHighScore();
