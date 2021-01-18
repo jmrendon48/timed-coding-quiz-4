@@ -304,15 +304,16 @@ var saveScorePage = function() {
             event.preventDefault();
         }
         else {
-            event.preventDefault();
             var newHighScoreObj = {
                 initials: initialsText,
                 score: score
             }
-            var previousHighScores = localStorage.getItem("highScores");
-            highScores = JSON.parse(previousHighScores);
-            highScores.push(newHighScoreObj);
+            if (highScores.length > 0) {
+                var previousHighScores = localStorage.getItem("highScores");
+                highScores = JSON.parse(previousHighScores);
+            }
 
+            highScores.push(newHighScoreObj);
             saveHighScore();
             saveScoreContainer.remove();
             highScoresPage();
