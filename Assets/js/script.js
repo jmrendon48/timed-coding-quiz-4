@@ -304,6 +304,7 @@ var saveScorePage = function() {
             event.preventDefault();
         }
         else {
+            event.preventDefault();
             var newHighScoreObj = {
                 initials: initialsText,
                 score: score
